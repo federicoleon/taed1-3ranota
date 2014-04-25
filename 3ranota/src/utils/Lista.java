@@ -15,15 +15,12 @@ public class Lista {
 	public void agregar(Object objeto) {
 		Nodo nodo = new Nodo(objeto);
 		if(this.comienzo == null) {
-			this.comienzo = nodo;
 			nodo.setAnterior(this.comienzo);
+			this.comienzo = nodo;
 		}else{
-			Nodo aux = this.comienzo;
-			while(aux.getSiguiente() != null) {
-				aux = aux.getSiguiente();
-			}
-			aux.setSiguiente(nodo);
-			nodo.setAnterior(aux);
+			this.comienzo.setAnterior(nodo);
+			nodo.setSiguiente(this.comienzo);
+			this.comienzo = nodo;
 		}
 		this.tamanioActual ++;
 	}

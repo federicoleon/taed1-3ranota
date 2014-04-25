@@ -23,7 +23,7 @@ public class DirectoryService {
 				Archivo archivo = new Archivo(file.getName());
 				if (file.isDirectory()) {
 					archivo.setEsDirectorio(true);
-					ejecucion.agregarDirectorio(archivo);
+					ejecucion.agregar(archivo);
 					createNewDirectoryStructure(ejecucion, file);
 				} else {
 					if(Validaciones.esFormatoDocumentoValido(archivo.getNombre())) {
@@ -31,7 +31,7 @@ public class DirectoryService {
 					}else if(Validaciones.esFormatoImagenValido(archivo.getNombre())) {
 						archivo.setEsFotoValida(true);
 					}
-					ejecucion.agregarArchivo(archivo);
+					ejecucion.agregar(archivo);
 				}
 			}
 		} catch (Exception e) {
