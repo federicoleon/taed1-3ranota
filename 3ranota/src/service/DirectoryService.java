@@ -1,36 +1,46 @@
 package service;
 
+import java.io.File;
+import utils.Validaciones;
+import model.Archivo;
+import model.Ejecucion;
+
 public class DirectoryService {
-	private String rootPath;
-	private HistoryService historyService;
 	
 	public DirectoryService() {
-		this.historyService = new HistoryService();
-	}
-
-	public String getRootPath() {
-		return rootPath;
-	}
-
-	public void setRootPath(String rootPath) {
-		this.rootPath = rootPath;
 	}
 	
-	public void createNewDirectoryStructure(String pathToDirectory) {
-		public static void displayDirectoryContents(File dir) {
-			try {
-				File[] files = dir.listFiles();
-				for (File file : files) {
-					if (file.isDirectory()) {
-						System.out.println("directory:" + file.getCanonicalPath());
-						displayDirectoryContents(file);
-					} else {
-						System.out.println("     file:" + file.getCanonicalPath());
+	public void createNewDirectoryStructure(String directoryPath) {
+		Ejecucion ejecucion = new Ejecucion(directoryPath);
+		this.createNewDirectoryStructure(ejecucion, ejecucion.getFilePath());
+		this.processResults(ejecucion);
+	}
+	
+	private void createNewDirectoryStructure(Ejecucion ejecucion, File pathDirectory) {
+		try {
+			File[] files = pathDirectory.listFiles();
+			for (File file : files) {
+				Archivo archivo = new Archivo(file.getName());
+				System.out.println(archivo);
+				if (file.isDirectory()) {
+					archivo.setEsDirectorio(true);
+					ejecucion.agregarDirectorio(archivo);
+					createNewDirectoryStructure(ejecucion, file);
+				} else {
+					if(Validaciones.esFormatoDocumentoValido(archivo.getNombre())) {
+						archivo.setEsDocumentoValido(true);
+					}else if(Validaciones.esFormatoImagenValido(archivo.getNombre())) {
+						archivo.setEsFotoValida(true);
 					}
+					ejecucion.agregarArchivo(archivo);
 				}
-			} catch (IOException e) {
-				e.printStackTrace();
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+	}
+	
+	private void processResults(Ejecucion ejecucion) {
+		
 	}
 }
