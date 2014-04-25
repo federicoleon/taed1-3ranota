@@ -13,7 +13,7 @@ public class DirectoryService {
 	public void createNewDirectoryStructure(String directoryPath) {
 		Ejecucion ejecucion = new Ejecucion(directoryPath);
 		this.createNewDirectoryStructure(ejecucion, ejecucion.getFilePath());
-		this.processResults(ejecucion);
+		ejecucion.procesarResultados();
 	}
 	
 	private void createNewDirectoryStructure(Ejecucion ejecucion, File pathDirectory) {
@@ -21,7 +21,6 @@ public class DirectoryService {
 			File[] files = pathDirectory.listFiles();
 			for (File file : files) {
 				Archivo archivo = new Archivo(file.getName());
-				System.out.println(archivo);
 				if (file.isDirectory()) {
 					archivo.setEsDirectorio(true);
 					ejecucion.agregarDirectorio(archivo);
@@ -38,9 +37,5 @@ public class DirectoryService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-	
-	private void processResults(Ejecucion ejecucion) {
-		
 	}
 }

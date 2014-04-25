@@ -8,6 +8,7 @@ public class Ejecucion {
 	private File path;
 	private Lista directorios;
 	private Lista archivos;
+	private Resultados resultados;
 	
 	public Ejecucion(String path) {
 		this.path = new File(path);
@@ -33,5 +34,13 @@ public class Ejecucion {
 	
 	public Lista getArchivos() {
 		return this.archivos;
+	}
+	
+	public void procesarResultados() {
+		this.resultados = new Resultados(this);
+	}
+	
+	public Resultados getResultadosEjecucion() {
+		return this.resultados;
 	}
 }
