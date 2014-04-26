@@ -1,11 +1,11 @@
 package view;
 
 import java.awt.BorderLayout;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import model.Resultados;
 import service.DirectoryService;
 
 public class Principal extends JFrame {
@@ -22,5 +22,11 @@ public class Principal extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
+		this.nuevaEjecucion();
+	}
+	
+	private void nuevaEjecucion() {
+		Resultados aux = this.directoryService.createNewDirectoryStructure("/Users/fleon/Documents/testing/2014_3rNotaAED1");
+		System.out.println(aux);
 	}
 }

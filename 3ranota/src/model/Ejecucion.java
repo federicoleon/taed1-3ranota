@@ -11,7 +11,7 @@ public class Ejecucion {
 	
 	public Ejecucion(String path) {
 		this.path = new File(path);
-		this.archivos = new Lista();
+		this.archivos = new Lista(false);
 	}
 	
 	public File getFilePath() {
@@ -19,7 +19,7 @@ public class Ejecucion {
 	}
 	
 	public void agregar(Archivo archivo) {
-		this.archivos.agregar(archivo);
+		this.archivos.insertar(archivo);
 	}
 	
 	public Lista getArchivos() {

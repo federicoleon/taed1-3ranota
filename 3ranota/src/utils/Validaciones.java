@@ -3,8 +3,9 @@ package utils;
 public class Validaciones {
 	
 	private enum ExtensionesImagenValidas {
-		JPG("jpg"), 
-	    JPEG("jpeg"), 
+		JPG("jpg"),
+	    JPEG("jpeg"),
+	    BMP("bmp"), 
 	    PNG("png");
 	    
 	    private String extension;
@@ -17,6 +18,7 @@ public class Validaciones {
 	    public static boolean esExtensionValida(String ext) {
 	    	return ( ext.equalsIgnoreCase(JPG.getExtension()) ||
     			ext.equalsIgnoreCase(JPEG.getExtension()) ||
+    			ext.equalsIgnoreCase(BMP.getExtension()) ||
     			ext.equalsIgnoreCase(PNG.getExtension()));
 	    }
 	}
@@ -57,5 +59,11 @@ public class Validaciones {
 		} catch(Exception e) {
 			return false;
 		}
+	}
+	
+	public static String getExtension(String nombreArchivo) {
+		String[] aux = nombreArchivo.split("\\.");
+		String extension = aux[(aux.length - 1)];
+		return extension;
 	}
 }

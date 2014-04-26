@@ -1,5 +1,7 @@
 package model;
 
+import utils.Validaciones;
+
 public class Archivo {
 	private String nombre;
 	private boolean esDirectorio;
@@ -43,6 +45,10 @@ public class Archivo {
 	
 	public void setEsDirectorio(boolean esDirectorio) {
 		this.esDirectorio = esDirectorio;
+	}
+	
+	public String getExtension() {
+		return Validaciones.getExtension(this.getNombre());
 	}
 	
 	public String toString() {
