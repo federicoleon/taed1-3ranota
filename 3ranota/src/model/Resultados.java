@@ -3,7 +3,6 @@ package model;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-
 import utils.Arbol;
 import utils.Constantes;
 import utils.Lista;

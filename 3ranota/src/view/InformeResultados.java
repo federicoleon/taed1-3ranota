@@ -6,7 +6,6 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import utils.Constantes;
 import utils.Lista;
 import utils.Nodo;
