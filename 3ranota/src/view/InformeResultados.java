@@ -6,6 +6,8 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import utils.Constantes;
 import utils.Lista;
 import utils.Nodo;
 import javax.swing.JLabel;
@@ -35,6 +37,7 @@ public class InformeResultados extends JDialog {
 	private JTextArea txtArbolGenerado;
 	private JLabel lblPeso;
 	private JLabel lblAltura;
+	private Resultados resultadoActual;
 
 	public InformeResultados(JFrame principal) {
 		setTitle("An\u00E1lisis de directorios - Estad\u00EDsticas completas");
@@ -91,13 +94,7 @@ public class InformeResultados extends JDialog {
 		panel_1.add(scrollPane_1);
 		
 		tblDocumentosValidos = new JTable();
-		tblDocumentosValidos.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-					"Nombre de archivo", "Formato"
-			}
-		));
+		tblDocumentosValidos.setModel(this.getNuevoModelo(Constantes.RESULTADOS_COLUMNAS_TBL_DOCUMENTOS_VALIDOS));
 		scrollPane_1.setViewportView(tblDocumentosValidos);
 		
 		JPanel panel_2 = new JPanel();
@@ -111,13 +108,7 @@ public class InformeResultados extends JDialog {
 		panel_2.add(scrollPane_2);
 		
 		tblOtrosArchivos = new JTable();
-		tblOtrosArchivos.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-					"Nombre de archivo", "Formato"
-			}
-		));
+		tblOtrosArchivos.setModel(this.getNuevoModelo(Constantes.RESULTADOS_COLUMNAS_TBL_OTROS_ARCHIVOS));
 		scrollPane_2.setViewportView(tblOtrosArchivos);
 		
 		JPanel panel_3 = new JPanel();
@@ -131,13 +122,7 @@ public class InformeResultados extends JDialog {
 		panel_3.add(scrollPane_3);
 		
 		tblFotosValidas = new JTable();
-		tblFotosValidas.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"Nombre de archivo", "Formato"
-			}
-		));
+		tblFotosValidas.setModel(this.getNuevoModelo(Constantes.RESULTADOS_COLUMNAS_TBL_FOTOS_VALIDAS));
 		scrollPane_3.setViewportView(tblFotosValidas);
 		
 		JButton btnSalir = new JButton("Salir");
@@ -202,75 +187,79 @@ public class InformeResultados extends JDialog {
 			} while(nodo != null);
 		}
 		this.tablaResultadosAnteriores.setModel(modeloResultadosAnteriores);
+		this.tablaResultadosAnteriores.repaint();
 	}
 	
 	private void cargarInformacionParaResultadoEnFila(int numeroFila) {
 		Resultados resultado = this.getResultadoEnFila(numeroFila);
-		DefaultTableModel modeloDocumentosValidos = (DefaultTableModel)this.tblDocumentosValidos.getModel();
-		this.vaciarModeloTabla(modeloDocumentosValidos);
-		Nodo nodoDocumentosValidos = resultado.getDocumentosValidos().getComienzo();
-		if(nodoDocumentosValidos != null) {
-			Archivo archivo;
-			do {
-				archivo = (Archivo)nodoDocumentosValidos.getObjeto();
-				Object fila[] = new Object[] { archivo.getNombre(), archivo.getExtension().toUpperCase() };
-				modeloDocumentosValidos.addRow(fila);
-				nodoDocumentosValidos = nodoDocumentosValidos.getSiguiente();
-			} while(nodoDocumentosValidos != null);
+		if(resultado != this.resultadoActual) {
+			this.resultadoActual = resultado;
+			DefaultTableModel modeloDocumentosValidos = this.getNuevoModelo(Constantes.RESULTADOS_COLUMNAS_TBL_DOCUMENTOS_VALIDOS);
+			Nodo nodoDocumentosValidos = resultado.getDocumentosValidos().getComienzo();
+			if(nodoDocumentosValidos != null) {
+				Archivo archivo;
+				do {
+					archivo = (Archivo)nodoDocumentosValidos.getObjeto();
+					Object fila[] = new Object[] { archivo.getNombre(), archivo.getExtension().toUpperCase() };
+					modeloDocumentosValidos.addRow(fila);
+					nodoDocumentosValidos = nodoDocumentosValidos.getSiguiente();
+				} while(nodoDocumentosValidos != null);
+			}
+			this.tblDocumentosValidos.setModel(modeloDocumentosValidos);
+			this.tblDocumentosValidos.repaint();
+			
+			DefaultTableModel modeloOtrosArchivos = this.getNuevoModelo(Constantes.RESULTADOS_COLUMNAS_TBL_OTROS_ARCHIVOS);
+			Nodo otrosArchivos = resultado.getOtrosArchivos().getComienzo();
+			if(otrosArchivos != null) {
+				Archivo archivo;
+				do {
+					archivo = (Archivo)otrosArchivos.getObjeto();
+					Object fila[] = new Object[] { archivo.getNombre(), archivo.getExtension().toUpperCase() };
+					modeloOtrosArchivos.addRow(fila);
+					otrosArchivos = otrosArchivos.getSiguiente();
+				} while(otrosArchivos != null);
+			}
+			this.tblOtrosArchivos.setModel(modeloOtrosArchivos);
+			this.tblOtrosArchivos.repaint();
+			
+			DefaultTableModel modeloFotos = this.getNuevoModelo(Constantes.RESULTADOS_COLUMNAS_TBL_FOTOS_VALIDAS);
+			Nodo fotos = resultado.getFotosBMP().getComienzo();
+			if(fotos != null) {
+				Archivo archivo;
+				do {
+					archivo = (Archivo)fotos.getObjeto();
+					Object fila[] = new Object[] { archivo.getNombre(), archivo.getExtension().toUpperCase() };
+					modeloFotos.addRow(fila);
+					fotos = fotos.getSiguiente();
+				} while(fotos != null);
+			}
+			fotos = resultado.getFotosJPG().getComienzo();
+			if(fotos != null) {
+				Archivo archivo;
+				do {
+					archivo = (Archivo)fotos.getObjeto();
+					Object fila[] = new Object[] { archivo.getNombre(), archivo.getExtension().toUpperCase() };
+					modeloFotos.addRow(fila);
+					fotos = fotos.getSiguiente();
+				} while(fotos != null);
+			}
+			fotos = resultado.getFotosPNG().getComienzo();
+			if(fotos != null) {
+				Archivo archivo;
+				do {
+					archivo = (Archivo)fotos.getObjeto();
+					Object fila[] = new Object[] { archivo.getNombre(), archivo.getExtension().toUpperCase() };
+					modeloFotos.addRow(fila);
+					fotos = fotos.getSiguiente();
+				} while(fotos != null);
+			}
+			this.tblFotosValidas.setModel(modeloFotos);
+			this.tblFotosValidas.repaint();
+			
+			this.lblPeso.setText(String.valueOf(resultado.getArbolGenerado().getPeso()));
+			this.lblAltura.setText(String.valueOf(resultado.getArbolGenerado().getAltura()));
+			this.txtArbolGenerado.setText(resultado.getArbolGenerado().getArbolEnTexto());
 		}
-		this.tblDocumentosValidos.setModel(modeloDocumentosValidos);
-		
-		DefaultTableModel modeloOtrosArchivos = (DefaultTableModel)this.tblOtrosArchivos.getModel();
-		this.vaciarModeloTabla(modeloOtrosArchivos);
-		Nodo otrosArchivos = resultado.getOtrosArchivos().getComienzo();
-		if(otrosArchivos != null) {
-			Archivo archivo;
-			do {
-				archivo = (Archivo)otrosArchivos.getObjeto();
-				Object fila[] = new Object[] { archivo.getNombre(), archivo.getExtension().toUpperCase() };
-				modeloOtrosArchivos.addRow(fila);
-				otrosArchivos = otrosArchivos.getSiguiente();
-			} while(otrosArchivos != null);
-		}
-		this.tblOtrosArchivos.setModel(modeloOtrosArchivos);
-		
-		DefaultTableModel modeloFotos = (DefaultTableModel)this.tblFotosValidas.getModel();
-		this.vaciarModeloTabla(modeloFotos);
-		Nodo fotos = resultado.getFotosBMP().getComienzo();
-		if(fotos != null) {
-			Archivo archivo;
-			do {
-				archivo = (Archivo)fotos.getObjeto();
-				Object fila[] = new Object[] { archivo.getNombre(), archivo.getExtension().toUpperCase() };
-				modeloFotos.addRow(fila);
-				fotos = fotos.getSiguiente();
-			} while(fotos != null);
-		}
-		fotos = resultado.getFotosJPG().getComienzo();
-		if(fotos != null) {
-			Archivo archivo;
-			do {
-				archivo = (Archivo)fotos.getObjeto();
-				Object fila[] = new Object[] { archivo.getNombre(), archivo.getExtension().toUpperCase() };
-				modeloFotos.addRow(fila);
-				fotos = fotos.getSiguiente();
-			} while(fotos != null);
-		}
-		fotos = resultado.getFotosPNG().getComienzo();
-		if(fotos != null) {
-			Archivo archivo;
-			do {
-				archivo = (Archivo)fotos.getObjeto();
-				Object fila[] = new Object[] { archivo.getNombre(), archivo.getExtension().toUpperCase() };
-				modeloFotos.addRow(fila);
-				fotos = fotos.getSiguiente();
-			} while(fotos != null);
-		}
-		this.tblFotosValidas.setModel(modeloFotos);
-		
-		this.lblPeso.setText(String.valueOf(resultado.getArbolGenerado().getPeso()));
-		this.lblAltura.setText(String.valueOf(resultado.getArbolGenerado().getAltura()));
-		this.txtArbolGenerado.setText(resultado.getArbolGenerado().getArbolEnTexto());
 	}
 	
 	private Resultados getResultadoEnFila(int numeroFila) {
@@ -283,9 +272,11 @@ public class InformeResultados extends JDialog {
 		return null;
 	}
 	
-	private void vaciarModeloTabla(DefaultTableModel modelo) {
-		for(int i=0; i<modelo.getRowCount(); i++) {
-			modelo.removeRow(i);
+	private DefaultTableModel getNuevoModelo(Object[] columnas) {
+		DefaultTableModel resultado = new DefaultTableModel();
+		for(int i=0; i<columnas.length; i++) {
+			resultado.addColumn(columnas[i]);
 		}
+		return resultado;
 	}
 }

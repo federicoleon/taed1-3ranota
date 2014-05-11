@@ -8,4 +8,7 @@ public class Constantes {
 	public static final String BMP = "bmp";
 	public static final String PNG = "png";
 	public static final String RESULTADOS_ARCHIVO_DOCUMENTOS = "documentos.txt";
+	public static final String[] RESULTADOS_COLUMNAS_TBL_DOCUMENTOS_VALIDOS = new String[] { "Nombre de archivo", "Formato" };
+	public static final String[] RESULTADOS_COLUMNAS_TBL_OTROS_ARCHIVOS = new String[] { "Nombre de archivo", "Formato" };
+	public static final String[] RESULTADOS_COLUMNAS_TBL_FOTOS_VALIDAS = new String[] { "Nombre de archivo", "Formato" };
 }
