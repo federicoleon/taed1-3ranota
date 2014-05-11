@@ -1,7 +1,6 @@
 package model;
 
 import java.io.File;
-
 import utils.Lista;
 
 public class Ejecucion {
@@ -11,7 +10,11 @@ public class Ejecucion {
 	
 	public Ejecucion(String path) {
 		this.path = new File(path);
-		this.archivos = new Lista(false);
+		this.archivos = new Lista();
+	}
+	
+	public String getPathInicial() {
+		return this.path.getAbsolutePath();
 	}
 	
 	public File getFilePath() {

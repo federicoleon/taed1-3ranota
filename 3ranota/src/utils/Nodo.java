@@ -10,6 +10,12 @@ public class Nodo {
 		this.objeto = objeto;
 	}
 	
+	public Nodo(Nodo nodo) {
+		this.objeto = nodo.getObjeto();
+		this.siguiente = nodo.getSiguiente();
+		this.anterior = nodo.getAnterior();
+	}
+	
 	public Object getObjeto() {
 		return objeto;
 	}
