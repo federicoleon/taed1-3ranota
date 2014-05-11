@@ -4,6 +4,7 @@ import model.Archivo;
 
 public class Lista {
 	private Nodo comienzo;
+	private Nodo fin;
 	private int tamanioActual;
 	
 	public Lista() {
@@ -14,15 +15,41 @@ public class Lista {
 		return this.comienzo;
 	}
 	
-	public boolean insertar(Object objeto) {
+	public Nodo getFin() {
+		return this.fin;
+	}
+	
+	public boolean insertarAlFrente(Object objeto) {
 		Nodo nodo = new Nodo(objeto);
 		if(this.comienzo == null) {
-			nodo.setAnterior(this.comienzo);
 			this.comienzo = nodo;
+			if(this.fin == null) {
+				this.fin = nodo;
+			}
 		}else{
 			this.comienzo.setAnterior(nodo);
 			nodo.setSiguiente(this.comienzo);
 			this.comienzo = nodo;
+		}
+		this.tamanioActual ++;
+		return true;
+	}
+	
+	public boolean insertarAlFinal(Object objeto) {
+		Nodo nodo = new Nodo(objeto);
+		if(this.comienzo == null) {
+			this.comienzo = nodo;
+			if(this.fin == null) {
+				this.fin = nodo;
+			}
+		}else{
+			if(this.fin == null) {
+				this.fin = nodo;
+			}else{
+				this.fin.setSiguiente(nodo);
+				nodo.setAnterior(this.fin);
+				this.fin = nodo;
+			}
 		}
 		this.tamanioActual ++;
 		return true;
@@ -66,7 +93,7 @@ public class Lista {
 		Lista lista = new Lista();
 		Archivo aux[] = Ordenamiento.ordenarConBurbuja(this.getContenido());
 		for(int i=0; i<aux.length; i++) {
-			lista.insertar(aux[i]);
+			lista.insertarAlFrente(aux[i]);
 		}
 		return lista;
 	}
@@ -75,7 +102,7 @@ public class Lista {
 		Lista lista = new Lista();
 		Archivo aux[] = Ordenamiento.ordenarConBurbuja(this.getContenido());
 		for(int i=(aux.length - 1); i>=0; i--) {
-			lista.insertar(aux[i]);
+			lista.insertarAlFrente(aux[i]);
 		}
 		return lista;
 	}

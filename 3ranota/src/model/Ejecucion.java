@@ -22,7 +22,7 @@ public class Ejecucion {
 	}
 	
 	public void agregar(Archivo archivo) {
-		this.archivos.insertar(archivo);
+		this.archivos.insertarAlFrente(archivo);
 	}
 	
 	public Lista getArchivos() {

@@ -1,6 +1,7 @@
 package service;
 
 import java.io.File;
+import utils.Arbol;
 import utils.Lista;
 import model.Archivo;
 import model.Ejecucion;
@@ -22,8 +23,11 @@ public class DirectoryService {
 		ejecucion.procesarResultados();
 		Resultados resultado = ejecucion.getResultadosEjecucion();
 		resultado.setIdResultado(this.ultimoIdResultado);
+		File baseArbol = new File(directoryPath);
+		Arbol arbol = this.crearArbolDesdeDirectorio(baseArbol);
+		resultado.setArbolGenerado(arbol);
 		this.ultimoIdResultado++;
-		this.resultados.insertar(resultado);
+		this.resultados.insertarAlFrente(resultado);
 		return resultado;
 	}
 	
@@ -43,6 +47,30 @@ public class DirectoryService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private Arbol crearArbolDesdeDirectorio(File raiz) {
+		Arbol arbol = new Arbol(raiz.getName());
+		try {
+			File[] files = raiz.listFiles();
+			for (File file : files) {
+				if(!file.getName().equalsIgnoreCase(".DS_Store")) {
+					if (file.isDirectory()) {
+						Arbol aux = crearArbolDesdeDirectorio(file);
+						aux.setPadre(arbol);
+						arbol.agregarHijo(aux);
+					} else {
+						Arbol aux = new Arbol(file.getName());
+						aux.setPadre(arbol);
+						arbol.agregarHijo(aux);
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return arbol;
 	}
 	
 	public Lista getResultados() {

@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import utils.Arbol;
 import utils.Constantes;
 import utils.Lista;
 import utils.Nodo;
@@ -19,6 +20,7 @@ public class Resultados {
 	private Lista fotosJPG;
 	private Lista fotosBMP;
 	private Lista fotosPNG;
+	private Arbol arbol;
 	
 	public Resultados(Ejecucion ejecucion) {
 		this.ejecucion = ejecucion;
@@ -42,19 +44,19 @@ public class Resultados {
 					if(Validaciones.esFormatoImagenValido(archivo.getNombre())) {
 						archivo.setEsFotoValida(true);
 						if(Constantes.PNG.equalsIgnoreCase(archivo.getExtension())) {
-							this.fotosPNG.insertar(archivo);
+							this.fotosPNG.insertarAlFrente(archivo);
 						}
 						if(Constantes.JPG.equalsIgnoreCase(archivo.getExtension()) || Constantes.JPEG.equalsIgnoreCase(archivo.getExtension())) {
-							this.fotosJPG.insertar(archivo);
+							this.fotosJPG.insertarAlFrente(archivo);
 						}
 						if(Constantes.BMP.equalsIgnoreCase(archivo.getExtension())) {
-							this.fotosBMP.insertar(archivo);
+							this.fotosBMP.insertarAlFrente(archivo);
 						}
 					} else if(Validaciones.esFormatoDocumentoValido(archivo.getNombre())) {
 						archivo.setEsDocumentoValido(true);
-						this.documentosValidos.insertar(archivo); 
+						this.documentosValidos.insertarAlFrente(archivo); 
 					} else {
-						this.otrosArchivos.insertar(archivo);
+						this.otrosArchivos.insertarAlFrente(archivo);
 					}
 					this.cantidadArchivos++;
 				}
@@ -160,6 +162,14 @@ public class Resultados {
 	
 	public int getIdResultado() {
 		return this.idResultado;
+	}
+	
+	public void setArbolGenerado(Arbol arbol) {
+		this.arbol = arbol;
+	}
+	
+	public Arbol getArbolGenerado() {
+		return this.arbol;
 	}
 	
 	public String toString() {
