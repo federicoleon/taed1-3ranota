@@ -28,10 +28,10 @@ public class Principal extends JFrame {
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		
-		JMenu mnEjecuciones = new JMenu("Ejecuciones");
+		JMenu mnEjecuciones = new JMenu("An\u00E1lisis");
 		menuBar.add(mnEjecuciones);
 		
-		JMenuItem mntmNuevaEjecucion = new JMenuItem("Nueva ejecuci\u00F3n");
+		JMenuItem mntmNuevaEjecucion = new JMenuItem("Nuevo an\u00E1lisis");
 		mntmNuevaEjecucion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				NuevaEjecucion nuevaEjecucion = new NuevaEjecucion(principal);
