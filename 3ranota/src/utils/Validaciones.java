@@ -3,8 +3,7 @@ package utils;
 public class Validaciones {
 	
 	private enum ExtensionesImagenValidas {
-		JPG("jpg"),
-	    JPEG("jpeg"),
+		JPG("jpg"), 
 	    BMP("bmp"), 
 	    PNG("png");
 	    
@@ -17,7 +16,6 @@ public class Validaciones {
 	    }
 	    public static boolean esExtensionValida(String ext) {
 	    	return ( ext.equalsIgnoreCase(JPG.getExtension()) ||
-    			ext.equalsIgnoreCase(JPEG.getExtension()) ||
     			ext.equalsIgnoreCase(BMP.getExtension()) ||
     			ext.equalsIgnoreCase(PNG.getExtension()));
 	    }

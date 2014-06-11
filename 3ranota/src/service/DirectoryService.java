@@ -54,16 +54,14 @@ public class DirectoryService {
 		try {
 			File[] files = raiz.listFiles();
 			for (File file : files) {
-				if(!file.getName().equalsIgnoreCase(".DS_Store")) {
-					if (file.isDirectory()) {
-						Arbol aux = crearArbolDesdeDirectorio(file);
-						aux.setPadre(arbol);
-						arbol.agregarHijo(aux);
-					} else {
-						Arbol aux = new Arbol(file.getName());
-						aux.setPadre(arbol);
-						arbol.agregarHijo(aux);
-					}
+				if (file.isDirectory()) {
+					Arbol aux = crearArbolDesdeDirectorio(file);
+					aux.setPadre(arbol);
+					arbol.agregarHijo(aux);
+				} else {
+					Arbol aux = new Arbol(file.getName());
+					aux.setPadre(arbol);
+					arbol.agregarHijo(aux);
 				}
 			}
 		} catch (Exception e) {
