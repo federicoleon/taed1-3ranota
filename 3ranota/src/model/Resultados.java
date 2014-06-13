@@ -45,7 +45,7 @@ public class Resultados {
 						if(Constantes.PNG.equalsIgnoreCase(archivo.getExtension())) {
 							this.fotosPNG.insertarAlFrente(archivo);
 						}
-						if(Constantes.JPG.equalsIgnoreCase(archivo.getExtension()) || Constantes.JPEG.equalsIgnoreCase(archivo.getExtension())) {
+						if(Constantes.JPG.equalsIgnoreCase(archivo.getExtension())) {
 							this.fotosJPG.insertarAlFrente(archivo);
 						}
 						if(Constantes.BMP.equalsIgnoreCase(archivo.getExtension())) {
